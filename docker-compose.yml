@@ -4,7 +4,7 @@ services:
     container_name: mongo-service
     image: mongo:latest
     volumes:
-      - ./backend/data:/data
+      - data:/data/db  # Use the named volume here for MongoDB data
     ports:
       - "27017:27017"
 
@@ -30,10 +30,10 @@ services:
     container_name: redis-service
     restart: unless-stopped
     image: redis:7.0.5-alpine 
-    expose:
-        - 6379
+    ports:              # Changed from expose to ports for host access
+      - "6379:6379"
     depends_on:
       - mongodb
 
 volumes:
-  data:
+  data:  # Named volume for MongoDB
